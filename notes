@@ -1,0 +1,5 @@
+install docker in linux.
+enable & start docker
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo ststemctl status docker
