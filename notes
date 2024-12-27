@@ -39,3 +39,19 @@ aws ecr get-login-password --region <region> --profile <profile> | docker login 
 sudo docker tag <image_id> <account_id>.dkr.ecr.<region>.amazonaws
 sudo docker push <account_id>.dkr.ecr.<region>.amazonaws/<image_name>
 sudo docker pull <account_id>.dkr.ecr.<region>.amazonaws/<image_name>
+
+task:-
+task1)
+# get the docker image of amazon linux
+# add tomcat package
+# add student ui
+
+# then commit the image 
+# store on ecr as well as docker hub
+
+task2)
+
+# get the docker image of amazon linux
+# install nginx
+# add free css
+
