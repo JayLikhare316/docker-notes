@@ -1,5 +1,41 @@
 install docker in linux.
+
 enable & start docker
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo ststemctl status docker
+
+sudo docker images
+sudo docker ps -a --> to see all stopped containers
+sudo docker ps
+
+hove to go inside container 
+sudo docker exec -it <container_id> /bin/bash --> to go inside the docker shell
+cd usr/share/nginx.html/
+rm index.html
+echo "hello world" > index.html
+sudo docker inspect <container_id> --> to inspect docker container 
+sudo docker logs <container_id> --> to get logs of the container
+sudo docker stop <container_id> --> to stop the container
+sudo docker start <container_id> --> to start the container
+sudo docker rm <container_id> --> to remove the container
+sudo docker rmi <image_id> --> to remove the image
+sudo docker rmi -f <image_id> --> to remove the image forcefully
+sudo docker commit <container_id> -->
+sudo docker image 
+sudo docker tag <image_id> <new_image_name> --> to tag the image
+
+sudo docker login --> to login into the docker
+sudo docker push <docker provided name> -->
+sudo docker run --name <> -d -P <name of repo>
+sudo docker tag demo (username)/(reponame)
+sudo docker push (username)/(reponame):latest
+
+#if I want to create my private image you can use ECR
+
+you have to create a ec2 role for ecr <ec2containerregistryfullaccess>
+copy login command
+aws ecr get-login-password --region <region> --profile <profile> | docker login --username AWS 
+sudo docker tag <image_id> <account_id>.dkr.ecr.<region>.amazonaws
+sudo docker push <account_id>.dkr.ecr.<region>.amazonaws/<image_name>
+sudo docker pull <account_id>.dkr.ecr.<region>.amazonaws/<image_name>
