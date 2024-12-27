@@ -55,3 +55,8 @@ task2)
 # install nginx
 # add free css
 
+task3)
+
+# host mysql container
+# -e (enviornment variables)
+# use msql user/mysql password
