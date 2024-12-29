@@ -1,4 +1,25 @@
-install docker in linux.
+DOCKER
+
+#Q.What is Docker? Why we need docker?
+A. Docker is a containerization platform that allows developers to package, ship, and run applications in
+containers. Containers are lightweight and portable, making it easier to develop, test, and deploy applications.
+
+#Q.What are containers?
+A. Containers are a type of virtualization that allows multiple applications to run on a single host operating
+system, each with its own isolated environment. Containers share the host operating system, but each container
+has its own file system, network stack, and process space.
+
+#Q.Virtualizer vs hypervisor?
+A. Hypervisor is a type of virtualization that creates a separate operating system for each virtual machin
+(HVM), whereas virtualizer is a type of virtualization that runs on top of a host operating
+system and shares the host operating system with the guest operating system (non-HVM).
+
+#Q.Monolythic app vs Microservice app?
+A. Monolythic app is a single application that performs multiple functions, whereas microservice app is 
+a collection of small, independent services that work together to perform a specific function.
+
+
+#install docker in linux.
 
 enable & start docker
 sudo systemctl enable docker
@@ -9,7 +30,8 @@ sudo docker images
 sudo docker ps -a --> to see all stopped containers
 sudo docker ps
 
-hove to go inside container 
+# have to go inside container :-
+
 sudo docker exec -it <container_id> /bin/bash --> to go inside the docker shell
 cd usr/share/nginx.html/
 rm index.html
@@ -21,9 +43,11 @@ sudo docker start <container_id> --> to start the container
 sudo docker rm <container_id> --> to remove the container
 sudo docker rmi <image_id> --> to remove the image
 sudo docker rmi -f <image_id> --> to remove the image forcefully
-sudo docker commit <container_id> -->
-sudo docker image 
+sudo docker commit <container_id> 
+sudo docker image --> to see all images for docker
 sudo docker tag <image_id> <new_image_name> --> to tag the image
+
+#login into the docker account in linux
 
 sudo docker login --> to login into the docker
 sudo docker push <docker provided name> -->
