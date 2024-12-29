@@ -4,7 +4,7 @@ enable & start docker
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo ststemctl status docker
-
+sudo docker run -d -p instance-port:container port container name or container ID (-d for detached -p for port forwarding -P for random port forwording)
 sudo docker images
 sudo docker ps -a --> to see all stopped containers
 sudo docker ps
