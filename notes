@@ -43,6 +43,8 @@ sudo docker pull <account_id>.dkr.ecr.<region>.amazonaws/<image_name>
 task:-
 task1)
 # get the docker image of amazon linux
+sudo docker pull amazonlinux
+sudo docker exec run -itd -p 80:8080 amazonlinux
 # add tomcat package
 # add student ui
 
