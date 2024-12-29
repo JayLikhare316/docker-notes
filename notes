@@ -8,7 +8,7 @@ sudo ststemctl status docker
 sudo docker images
 sudo docker ps -a --> to see all stopped containers
 sudo docker ps
-
+sudo docker run -itd amazonlinux
 hove to go inside container 
 sudo docker exec -it <container_id> /bin/bash --> to go inside the docker shell
 cd usr/share/nginx.html/
