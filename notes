@@ -86,23 +86,23 @@ task3)
 
 30 dec 2024--
 
-#task1) make a deamon service of tomcat.
+task4)
+#make a deamon service of tomcat.
 
 #docker container storage
 #persistane
-docker volumes:-
 
 # docker config files
 etc/docker
+docker volumes:-
 
-docker create volume
-docker volume ls
+docker create volume --> to create docker volume (universal docker storage)
+docker volume ls --> to list volumes
 cd var/lib/docker --> root directory of docker
-docker socket file --> /var/run/docker.sock
+/var/run/docker.sock --> docker socket file
 
 # Q.what is socket file?
 # A.socket file is a file that allows two processes to communicate with each other.
-#docker socket file is a file that allows two processes to communicate with each other.
 
 sudo docker run -d -v dev:usr/share/nginx/html -P nginx --> to add volume to the container
-
+sudo -v for volume dev for volume name :path to mount volume --name --> for adding name to container
