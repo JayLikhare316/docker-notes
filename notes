@@ -18,6 +18,10 @@ system and shares the host operating system with the guest operating system (non
 A. Monolythic app is a single application that performs multiple functions, whereas microservice app is 
 a collection of small, independent services that work together to perform a specific function.
 
+#Q.What is port forwarding?
+A. Port forwarding is a technique used in networking to forward incoming traffic from one port to another port.
+It allows a service running on a specific port on a host to be accessed from outside the host.
+
 
 #install docker in linux.
 
