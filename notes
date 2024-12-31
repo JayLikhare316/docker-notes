@@ -81,8 +81,8 @@ sudo docker push (username)/(reponame):latest
 
 you have to create a ec2 role for ecr <ec2containerregistryfullaccess>
 copy login command
-aws ecr get-login-password --region <region> --profile <profile> | docker login --username AWS 
-sudo docker tag <image_id> <account_id>.dkr.ecr.<region>.amazonaws
+aws ecr get-login-password --region <region> --profile <profile> | sudo docker login --username AWS 
+sudo docker tag <image_id> <account_id>.dkr.ecr.<region>.amazonaws  (add sudo command always after |)
 sudo docker push <account_id>.dkr.ecr.<region>.amazonaws/<image_name>
 sudo docker pull <account_id>.dkr.ecr.<region>.amazonaws/<image_name>
 
@@ -123,7 +123,10 @@ docker volumes
 
 ##docker socket file location
 /var/run/docker.
-what is socket file ?
+
+##what is socket file ?
+##A socket file, also known as a Unix domain socket, is a special file that facilitates inter-process
+##communication (IPC) on the same host system. 
 
 ##to create a storage universal in docker
 docker create volume
@@ -136,4 +139,47 @@ docker volume ls
 sudo docker run -d -v dev:/usr/share/nginx/html --name -P nginx
 ##sudo -v for volume dev for volume name :path to mount volume --name for adding name to container
 
+what is dockerfile ?
 
+
+dockerfile is written in golang language
+ENTRY POINT --> COMMAND TO RUN IN CONTAINER
+CMD --> CONTAINER
+FROM --> BASE IMAGE 
+RUN --> TO EXCUTE SHELL COMMANDS
+COPY --> FROM LOCAL TO CONTAINER COPY
+ADD --> TO DOWNLOAD
+EXPOSE --> PORTS 
+
+##DOCKERFILE
+
+FROM nginx 
+COPY oxer-html /usr/share/nginx/html/.
+
+how to build docker image from dockerfile ?
+
+sudo docker build -t .
+
+##docker file
+
+FROM amazonlinux
+
+RUN yum update && yum install nginx -y
+EXPOSE 80
+CMD ["/usr/sbin/nginx" , "-g", "daemon off;"]
+
+##docker file
+
+FROM amazonlinux
+RUN yum update && yum install java-17 -y && yum install unzip -y
+ADD tomcat-
+RUN unzip tomcat-
+RUN chmod 777 tomcat-/bin/catalina.sh
+
+EXPOSE 8080
+
+CMD ["apache/bin/catalina.sh", "start"]
+
+what is deffirence between entrypoint and CMD ?
+
+if dockerfile has many layers then the image will be heavy in size 
