@@ -110,3 +110,52 @@ cd var/lib/docker --> root directory of docker
 
 sudo docker run -d -v dev:usr/share/nginx/html -P nginx --> to add volume to the container
 sudo -v for volume dev for volume name :path to mount volume --name --> for adding name to container
+
+# DOCKERFILE:-
+
+# dockerfile is a text file that contains instructions for building a docker image.
+# docker file is a step by step instruction to our docker image.
+
+# dockerfile commands:-
+
+1. FROM:- it is used to specify the base image for our image.
+2. RUN:- it is used to run a command in the container.
+3. COPY:- it is used to copy a file from the local machine to the container.
+4. ADD:- it is used to copy a file from the local machine to the container.
+5. WORKDIR:- it is used to set the working directory in the container.
+6. EXPOSE:- it is used to specify the port that the container will listen on.
+7. ENV:- it is used to set an environment variable in the container.
+8. VOLUME:- it is used to specify a directory in the container that will be persisted ev
+9. CMD:- it is used to specify the default command to run when the container is started.
+10. ENTRYPOINT:- it is used to specify the default command to run when the container is started
+11. USER:- it is used to specify the user that the container will run as.
+12. ONBUILD:- it is used to specify a command that will be run when the image is
+13. ARG:- it is used to specify a variable that can be passed to the dockerfile.
+14. LABEL:- it is used to specify a label that can be used to identify the image.
+
+>>> demofile:
+
+FROM nginx
+COPY boxer-html /usr/share/nginx/html
+
+vim dockerfile --> paste above to dockerfile
+docker build -t dockerfile
+
+##
+FROM amazonlinux
+RUN yum update && yum install -y nginx
+EXPOSE 80
+CMD ["usr/share/nginx", "-g" , "daemon off;"]
+
+vim dockerfile --> paste above to dockerfile
+sudo docker build -t dummy-nginx
+sudo run -it dummy-nginx bash
+
+##
+
+##task-
+
+Q.Difference between entrypoint and cmd?
+cmd is used to specify the default command to run when the container is started.
+entrypoint is used to specify the default command to run when the container is started.
+
