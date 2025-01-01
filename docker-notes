@@ -1,0 +1,180 @@
+#Q.What is Docker? Why we need docker?
+A. Docker is a containerization platform that allows developers to package, ship, and run applications in
+containers. Containers are lightweight and portable, making it easier to develop, test, and deploy applications.
+
+#Q.What are containers?
+A. Containers are a type of virtualization that allows multiple applications to run on a single host operating
+system, each with its own isolated environment. Containers share the host operating system, but each container
+has its own file system, network stack, and process space.
+
+#Difference between container and image?
+A.          Image                                container
+ 1. A static, executable package             1. A running instance of an image.
+    containing everything needed
+    to run software.
+ 2. Immutable (does not change               2. Mutable (can be modified).
+    once created).
+ 3. Serves as a blueprint or                 3. Provides an isolated environment for running applications.
+    template for creating containers.
+ 4. No isolation; just a file system         4. Isolated from other containers and the host system.
+    snapshot.
+ 5. Built using a Dockerfile with a          5. Created from an image using the docker run command.gi
+    set of instructions.
+
+#Q.Virtualizer vs hypervisor?
+A. Hypervisor is a type of virtualization that creates a separate operating system for each virtual machin
+(HVM), whereas virtualizer is a type of virtualization that runs on top of a host operating
+system and shares the host operating system with the guest operating system (non-HVM).
+
+#Q.Monolythic app vs Microservice app?
+A. Monolythic app is a single application that performs multiple functions, whereas microservice app is 
+a collection of small, independent services that work together to perform a specific function.
+
+#Q.What is port forwarding?
+A. Port forwarding is a technique used in networking to forward incoming traffic from one port to another port.
+It allows a service running on a specific port on a host to be accessed from outside the host.
+
+
+#install docker in linux.
+
+enable & start docker
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo ststemctl status docker
+sudo docker run -d -p instance-port:container port container name or container ID (-d for detached -p for port forwarding -P for random port forwording)
+sudo docker images
+sudo docker ps -a --> to see all stopped containers
+sudo docker ps
+sudo docker run -itd amazonlinux bash
+sudo docker exec -it <container_id> /bin/bash --> to go inside the docker shell
+cd usr/share/nginx.html/
+rm index.html
+echo "hello world" > index.html
+sudo docker inspect <container_id> --> to inspect docker container 
+sudo docker logs <container_id> --> to get logs of the container
+sudo docker stop <container_id> --> to stop the container
+sudo docker start <container_id> --> to start the container
+sudo docker rm <container_id> --> to remove the container
+sudo docker rmi <image_id> --> to remove the image
+sudo docker rmi -f <image_id> --> to remove the image forcefully
+sudo docker commit <container_id> 
+sudo docker image --> to see all images for docker
+sudo docker tag <image_id> <new_image_name> --> to tag the image
+
+#login into the docker account in linux
+
+sudo docker login --> to login into the docker
+sudo docker push <docker provided name> -->
+sudo docker run --name <> -d -P <name of repo>
+sudo docker tag demo (username)/(reponame)
+sudo docker push (username)/(reponame):latest
+
+#if I want to create my private image you can use ECR
+
+you have to create a ec2 role for ecr <ec2containerregistryfullaccess>
+copy login command
+aws ecr get-login-password --region <region> --profile <profile> | docker login --username AWS 
+sudo docker tag <image_id> <account_id>.dkr.ecr.<region>.amazonaws
+sudo docker push <account_id>.dkr.ecr.<region>.amazonaws/<image_name>
+sudo docker pull <account_id>.dkr.ecr.<region>.amazonaws/<image_name>
+
+task:-
+task1)
+# get the docker image of amazon linux
+sudo docker pull amazonlinux
+sudo docker exec run -itd -p 80:8080 amazonlinux
+# add tomcat package
+# add student ui
+# then commit the image -->container se image banana
+# store on ecr as well as docker hub
+
+task2)
+
+# get the docker image of amazon linux
+# install nginx
+# add free css
+
+task3)
+
+# host mysql container
+# -e (enviornment variables)
+# use msql user/mysql password
+
+30 dec 2024--
+
+task4)
+#make a deamon service of tomcat.
+
+#docker container storage
+#persistane
+
+# docker config files
+etc/docker
+docker volumes:-
+
+docker create volume --> to create docker volume (universal docker storage)
+docker volume ls --> to list volumes
+cd var/lib/docker --> root directory of docker
+/var/run/docker.sock --> docker socket file
+
+# Q.what is socket file?
+# A.socket file is a file that allows two processes to communicate with each other.
+
+sudo docker run -d -v dev:usr/share/nginx/html -P nginx --> to add volume to the container
+sudo -v for volume dev for volume name :path to mount volume --name --> for adding name to container
+
+# DOCKERFILE:-
+
+# dockerfile is a text file that contains instructions for building a docker image.
+# docker file is a step by step instruction to our docker image.
+
+# dockerfile commands:-
+
+1. FROM:- it is used to specify the base image for our image.
+2. RUN:- it is used to run a command in the container.
+3. COPY:- it is used to copy a file from the local machine to the container.
+4. ADD:- it is used to copy a file from the local machine to the container.
+5. WORKDIR:- it is used to set the working directory in the container.
+6. EXPOSE:- it is used to specify the port that the container will listen on.
+7. ENV:- it is used to set an environment variable in the container.
+8. VOLUME:- it is used to specify a directory in the container that will be persisted ev
+9. CMD:- it is used to specify the default command to run when the container is started.
+10. ENTRYPOINT:- it is used to specify the default command to run when the container is started
+11. USER:- it is used to specify the user that the container will run as.
+12. ONBUILD:- it is used to specify a command that will be run when the image is
+13. ARG:- it is used to specify a variable that can be passed to the dockerfile.
+14. LABEL:- it is used to specify a label that can be used to identify the image.
+
+>>> demofile:
+
+FROM nginx
+COPY boxer-html /usr/share/nginx/html
+
+vim dockerfile --> paste above to dockerfile
+docker build -t dockerfile
+
+##
+FROM amazonlinux
+RUN yum update && yum install -y nginx
+EXPOSE 80
+CMD ["usr/share/nginx", "-g" , "daemon off;"]
+
+vim dockerfile --> paste above to dockerfile
+sudo docker build -t dummy-nginx
+sudo run -it dummy-nginx bash
+
+##
+FROM amazonlinux
+RUN yum update && yum install java-17 -y
+COPY . .
+RUN chmod 777 apache-tomcat-10.1.34/bin/catalina.sh
+EXPOSE 8080
+CMD ["apache-tomcat-10.1.34/bin/catalina.sh", "run"]
+
+##task-
+
+Q.Difference between entrypoint and cmd?
+cmd is used to specify the default command to run when the container is started.
+entrypoint is used to specify the default command to run when the container is started.
+
+##docker file
