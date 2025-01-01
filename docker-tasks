@@ -1,0 +1,46 @@
+task:-
+task1) DONE inside container(with dockerfile remaining)
+# get the docker image of amazon linux
+# add tomcat package
+# add student ui
+# then commit the image -->container se image banana
+# store on ecr as well as docker hub
+
+## Dockerfile for task1
+FROM amazonlinux
+RUN yum update && yum install java-17 -y
+COPY . .
+RUN chmod 777 apache-tomcat-10.1.34/bin/catalina.sh
+EXPOSE 8080
+CMD ["apache-tomcat-10.1.34/bin/catalina.sh", "run"]
+
+
+task2) DONE both within container and in dockerfile
+# get the docker image of amazon linux
+# install nginx
+# add free css
+
+## Dockerfile for task2
+FROM amazonlinux
+RUN yum update && yum install nginx -y
+EXPOSE 80
+CMD ["usr/sbin/nginx", "-g" , "daemon off;"]
+
+vim dockerfile --> paste above to dockerfile
+run the command --> "sudo docker build -t dockerfile ."
+command to run image --> "sudo docker run -it -d -p 80:80 dockerfile"
+
+
+task3)
+# host mysql container
+# -e (enviornment variables)
+# use msql user/mysql password
+
+
+task4)
+#make a deamon service of tomcat.
+
+#docker container storage
+#persistane
+
+# docker config files
