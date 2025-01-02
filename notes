@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-##install docker in linux.
-sudo yum install docker -y
-=======
 DOCKER
 
 #Q.What is Docker? Why we need docker?
@@ -22,34 +18,23 @@ system and shares the host operating system with the guest operating system (non
 A. Monolythic app is a single application that performs multiple functions, whereas microservice app is 
 a collection of small, independent services that work together to perform a specific function.
 
+#Q.What is port forwarding?
+A. Port forwarding is a technique used in networking to forward incoming traffic from one port to another port.
+It allows a service running on a specific port on a host to be accessed from outside the host.
+
 
 #install docker in linux.
->>>>>>> 9a0876a8232647d2b21139d1b534247c332bd93a
 
-##enable & start docker
+enable & start docker
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo ststemctl status docker
-
-
-## to list docker images
+sudo docker run -d -p instance-port:container port container name or container ID (-d for detached -p for port forwarding -P for random port forwording)
 sudo docker images
-
-##to list docker containers
 sudo docker ps -a --> to see all stopped containers
 sudo docker ps
-<<<<<<< HEAD
-
-##to run containers
-sudo docker run -d -p instance-port:container port container name or container ID (-d for detached -p for port forwarding -P for random port forwording)
 sudo docker run -itd amazonlinux bash
-=======
-sudo docker run -itd amazonlinux
-
->>>>>>> 9a0876a8232647d2b21139d1b534247c332bd93a
-hove to go inside container 
-sudo docker exec -it 6f90d0eac55d bash
-sudo docker -it <container_id> /bin/bash --> to go inside the docker shell
+sudo docker exec -it <container_id> /bin/bash --> to go inside the docker shell
 cd usr/share/nginx.html/
 rm index.html
 echo "hello world" > index.html
@@ -60,13 +45,8 @@ sudo docker start <container_id> --> to start the container
 sudo docker rm <container_id> --> to remove the container
 sudo docker rmi <image_id> --> to remove the image
 sudo docker rmi -f <image_id> --> to remove the image forcefully
-<<<<<<< HEAD
-sudo docker commit <container_id> --> to save container as image
-sudo docker image 
-=======
 sudo docker commit <container_id> 
 sudo docker image --> to see all images for docker
->>>>>>> 9a0876a8232647d2b21139d1b534247c332bd93a
 sudo docker tag <image_id> <new_image_name> --> to tag the image
 
 #login into the docker account in linux
@@ -81,8 +61,8 @@ sudo docker push (username)/(reponame):latest
 
 you have to create a ec2 role for ecr <ec2containerregistryfullaccess>
 copy login command
-aws ecr get-login-password --region <region> --profile <profile> | sudo docker login --username AWS 
-sudo docker tag <image_id> <account_id>.dkr.ecr.<region>.amazonaws  (add sudo command always after |)
+aws ecr get-login-password --region <region> --profile <profile> | docker login --username AWS 
+sudo docker tag <image_id> <account_id>.dkr.ecr.<region>.amazonaws
 sudo docker push <account_id>.dkr.ecr.<region>.amazonaws/<image_name>
 sudo docker pull <account_id>.dkr.ecr.<region>.amazonaws/<image_name>
 
@@ -93,8 +73,7 @@ sudo docker pull amazonlinux
 sudo docker exec run -itd -p 80:8080 amazonlinux
 # add tomcat package
 # add student ui
-
-# then commit the image 
+# then commit the image -->container se image banana
 # store on ecr as well as docker hub
 
 task2)
@@ -109,69 +88,36 @@ task3)
 # -e (enviornment variables)
 # use msql user/mysql password
 
-####12/12/2024
+30 dec 2024--
 
 task4)
-#create a daemon service of tomcat
+#make a deamon service of tomcat.
 
-sudo vi /etc/systemd/system/tomcat.service
+#docker container storage
+#persistane
 
-[Unit]
-Description=Apache Tomcat Web Application Container
-After=network.target
+# docker config files
+etc/docker
+docker volumes:-
 
-[Service]
-Type=forking
+docker create volume --> to create docker volume (universal docker storage)
+docker volume ls --> to list volumes
+cd var/lib/docker --> root directory of docker
+/var/run/docker.sock --> docker socket file
 
-Environment="JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64"
-Environment="CATALINA_PID=/opt/tomcat/updated/temp/tomcat.pid"
-Environment="CATALINA_HOME=/opt/tomcat/updated/"
-Environment="CATALINA_BASE=/opt/tomcat/updated/"
-Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
-Environment="JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom"
+# Q.what is socket file?
+# A.socket file is a file that allows two processes to communicate with each other.
 
-ExecStart=/opt/tomcat/updated/bin/startup.sh
-ExecStop=/opt/tomcat/updated/bin/shutdown.sh
+sudo docker run -d -v dev:usr/share/nginx/html -P nginx --> to add volume to the container
+sudo -v for volume dev for volume name :path to mount volume --name --> for adding name to container
 
-User=tomcat
-Group=tomcat
-UMask=0007
-RestartSec=10
-Restart=always
-[Install]
-WantedBy=multi-user.target
+# DOCKERFILE:-
 
+# dockerfile is a text file that contains instructions for building a docker image.
+# docker file is a step by step instruction to our docker image.
 
-##root directory of docker 
-/var/lib/docker/
+# dockerfile commands:-
 
-##docker configuration files
-/etc/docker
-docker volumes
-
-##docker socket file location
-/var/run/docker.
-
-##what is socket file ?
-##A socket file, also known as a Unix domain socket, is a special file that facilitates inter-process
-##communication (IPC) on the same host system. 
-
-##to create a storage universal in docker
-docker create volume
-
-##To LIst volumes
-docker volume ls
-
-##how to attach volume in container 
-
-sudo docker run -d -v dev:/usr/share/nginx/html --name -P nginx
-##sudo -v for volume dev for volume name :path to mount volume --name for adding name to container
-
-what is dockerfile ?
-
-
-##dockerfile is written in golang language
-##commands used in dockerfile
 1. FROM:- it is used to specify the base image for our image.
 2. RUN:- it is used to run a command in the container.
 3. COPY:- it is used to copy a file from the local machine to the container.
@@ -187,33 +133,51 @@ what is dockerfile ?
 13. ARG:- it is used to specify a variable that can be passed to the dockerfile.
 14. LABEL:- it is used to specify a label that can be used to identify the image.
 
-##DOCKERFILE
+>>> demofile:
 
-FROM nginx 
-COPY oxer-html /usr/share/nginx/html/.
+FROM nginx
+COPY boxer-html /usr/share/nginx/html
 
-how to build docker image from dockerfile ?
+vim dockerfile --> paste above to dockerfile
+docker build -t dockerfile
 
-sudo docker build -t .
-
-##docker file
-
+##
 FROM amazonlinux
-
-RUN yum update && yum install nginx -y
+RUN yum update && yum install -y nginx
 EXPOSE 80
-CMD ["/usr/sbin/nginx" , "-g", "daemon off;"]
+CMD ["usr/share/nginx", "-g" , "daemon off;"]
 
-##docker file
+vim dockerfile --> paste above to dockerfile
+sudo docker build -t dummy-nginx
+sudo run -it dummy-nginx bash
 
+##
 FROM amazonlinux
 RUN yum update && yum install java-17 -y
-COPY . .
+COPY . .   ##you have to download tomcat locally 
 RUN chmod 777 apache-tomcat-10.1.34/bin/catalina.sh
 EXPOSE 8080
 CMD ["apache-tomcat-10.1.34/bin/catalina.sh", "run"]
 
+##task-
 
-what is deffirence between entrypoint and CMD ?
+Q.Difference between entrypoint and cmd?
+cmd is used to specify the default command to run when the container is started.
+entrypoint is used to specify the default command to run when the container is started.
 
-if dockerfile has many layers then the image will be heavy in size 
+##docker file
+
+##02-01-25
+
+##Multi stage dockerfile
+
+FROM amazonlinux
+RUN yum install maven -y && yum install java-17 -y
+COPY tomcat /tomcat/.   ##you have to download tomcat locally rename to tomcat
+RUN chmod 777 tomcat/bin/catalina.sh
+COPY student-ui /student-ui/.   ##Git clone to student ui repo locally 
+WORKDIR /student-ui
+RUN mvn clean package
+RUN mv target/*war /tomcat/webapps/student.war
+EXPOSE 8080
+CMD ["/tomcat/bin/catalina.sh", "run"]
