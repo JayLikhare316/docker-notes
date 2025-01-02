@@ -165,5 +165,25 @@ Q.Difference between entrypoint and cmd?
 cmd is used to specify the default command to run when the container is started.
 entrypoint is used to specify the default command to run when the container is started.
 
-##docker file
+## docker (tomcat with studentui)
+
+FROM amazonlinux
+RUN yum update && yum install -y java-17 && yum install maven -y
+COPY tomcat /tomcat/.
+RUN chmod 777 tomcat/bin/catalina.sh
+EXPOSE 8080
+COPY student-ui /student-ui/.
+WORKDIR /student-ui
+RUN mvn clean package
+RUN mv target/*.war /tomcat/webapps/student.war
+CMD ["/tomcat/bin/catalina.sh", "run"]
+
+## #multistage docker file:(from docker container {dockerhub})
+
+FROM maven:3.9.9-amazoncorrectto-debian-bookwarm AS builder --> #maven ko builder ka naam de diya
+COPY student-ui
+RUN mvn clean package
+FROM tomcat:jre8-alpine 
+COPY --from=builder /target/*.war webapps/student.war
+
 
