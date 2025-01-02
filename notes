@@ -189,3 +189,10 @@ RUN mvn clean package #target/*.war
 
 FROM tomcat:jre8-alpine 
 COPY --from=builder /target/*.war webapps/student.war
+
+##syntax of tomcat dockerfile
+FROM maven:3.9.9-amazoncorretto-8-debian-bookworm AS builder
+COPY student-ui /.
+RUN mvn clean package
+FROM tomcat:jre8-alpine
+COPY --from=builder /target/*.war webapps/student.war
