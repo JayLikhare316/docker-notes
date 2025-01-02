@@ -145,7 +145,7 @@ docker build -t dockerfile
 FROM amazonlinux
 RUN yum update && yum install -y nginx
 EXPOSE 80
-CMD ["usr/share/nginx", "-g" , "daemon off;"]
+CMD ["usr/sbin/nginx", "-g" , "daemon off;"]
 
 vim dockerfile --> paste above to dockerfile
 sudo docker build -t dummy-nginx
@@ -166,3 +166,4 @@ cmd is used to specify the default command to run when the container is started.
 entrypoint is used to specify the default command to run when the container is started.
 
 ##docker file
+
