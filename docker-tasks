@@ -9,10 +9,14 @@ task1) DONE inside container(with dockerfile remaining)
 ## Dockerfile for task1
 FROM amazonlinux
 RUN yum update && yum install java-17 -y
-COPY . .
-RUN chmod 777 apache-tomcat-10.1.34/bin/catalina.sh
+COPY tomcat /tomcat/. #coping tomcat that is in the same directory as dockerfile.
+RUN chmod 777 tomcat/bin/catalina.sh
 EXPOSE 8080
-CMD ["apache-tomcat-10.1.34/bin/catalina.sh", "run"]
+COPY student-ui /student-ui/.
+WORKDIR /student-ui/
+RUN mvn clean package
+RUN mv target/*.war /tomcat/webapps/studentapp.war
+CMD ["/tomcat/bin/catalina.sh", "run"]
 
 
 task2) DONE both within container and in dockerfile
@@ -34,7 +38,7 @@ command to run image --> "sudo docker run -it -d -p 80:80 dockerfile"
 task3)
 # host mysql container
 # -e (enviornment variables)
-# use msql user/mysql password
+# use msql to make user/mysql password
 
 
 task4)
