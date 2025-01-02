@@ -169,7 +169,6 @@ entrypoint is used to specify the default command to run when the container is s
 
 ##02-01-25
 
-##Multi stage dockerfile
 
 FROM amazonlinux
 RUN yum install maven -y && yum install java-17 -y
@@ -181,3 +180,12 @@ RUN mvn clean package
 RUN mv target/*war /tomcat/webapps/student.war
 EXPOSE 8080
 CMD ["/tomcat/bin/catalina.sh", "run"]
+
+
+##Multi stage dockerfile
+FROM maven:3.9.9-amazoncorretto-8-debian-bookworm AS builder   ##AS for alias means renaming package
+COPY student-ui /.   ##Git clone to student ui repo locally
+RUN mvn clean package #target/*.war
+
+FROM tomcat:jre8-alpine 
+COPY --from=builder /target/*.war webapps/student.war
