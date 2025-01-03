@@ -7,7 +7,7 @@ A. Containers are a type of virtualization that allows multiple applications to 
 system, each with its own isolated environment. Containers share the host operating system, but each container
 has its own file system, network stack, and process space.
 
-#Difference between container and image?
+#Q.Difference between container and image?
 A.          Image                                container
  1. A static, executable package             1. A running instance of an image.
     containing everything needed
@@ -92,7 +92,7 @@ cd var/lib/docker --> root directory of docker
 sudo docker run -d -v dev:usr/share/nginx/html -P nginx --> to add volume to the container
 sudo -v for volume dev for volume name :path to mount volume --name --> for adding name to container
 
-# DOCKERFILE:-
+## DOCKERFILE:-
 
 # dockerfile is a text file that contains instructions for building a docker image.
 # docker file is a step by step instruction to our docker image.
@@ -142,3 +142,23 @@ Each stage is a separate docker image, and you can use the output of one stage a
 
  FROM tomcat:jre8-alpine
  COPY --from=mvnbuilder /target/*.war webapps/student.war # copied the war file from maven container to tomcat container using "from=(container_name)"
+
+ #Q. Why docker use 172.16.0.0/16 ip range?
+ A. Docker uses 172.16.0.0/16 ip range because it is a private ip range that is not routable on the internet.
+ It is used to prevent conflicts with the host machine's ip address and to provide a unique ip address for each container.
+
+## Docker Network
+ (By default we use bridge network)
+ Bridge network:- it is the default network in docker. It is used to connect containers to the host machine.
+ Host network:- it is used to connect a container to the host machine's network.
+ None network:- it is used to isolate a container from the host machine's network.
+ macvlan network:- it is used to assign a mac address to a container.
+ overlay network:- it is used to connect multiple docker hosts together.
+
+## Docker Compose
+ Docker compose is a tool for defining and running multi-container docker applications. It allows you to define the services, networks, and volumes for your application in a single file called docker-compose.yml.
+ sudo docker file name --> docker-compose.yml
+ sudo docker-compose up --> to start the containers
+ sudo docker-compose up -d --> to start the containers in detached mode i.e. in background
+ sudo docker-compose down --> to stop the containers
+
