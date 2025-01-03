@@ -116,6 +116,9 @@ sudo -v for volume dev for volume name :path to mount volume --name --> for addi
 # dockerfile is a text file that contains instructions for building a docker image.
 # docker file is a step by step instruction to our docker image.
 
+
+why do we need dockerfile ?
+
 # dockerfile commands:-
 
 1. FROM:- it is used to specify the base image for our image.
@@ -133,7 +136,6 @@ sudo -v for volume dev for volume name :path to mount volume --name --> for addi
 13. ARG:- it is used to specify a variable that can be passed to the dockerfile.
 14. LABEL:- it is used to specify a label that can be used to identify the image.
 
->>> demofile:
 
 FROM nginx
 COPY boxer-html /usr/share/nginx/html
@@ -169,7 +171,6 @@ entrypoint is used to specify the default command to run when the container is s
 
 ##02-01-25
 
-
 FROM amazonlinux
 RUN yum install maven -y && yum install java-17 -y
 COPY tomcat /tomcat/.   ##you have to download tomcat locally rename to tomcat
@@ -181,12 +182,12 @@ RUN mv target/*war /tomcat/webapps/student.war
 EXPOSE 8080
 CMD ["/tomcat/bin/catalina.sh", "run"]
 
-
 ##Multi stage dockerfile
+##layer 1
 FROM maven:3.9.9-amazoncorretto-8-debian-bookworm AS builder   ##AS for alias means renaming package
 COPY student-ui /.   ##Git clone to student ui repo locally
 RUN mvn clean package #target/*.war
-
+##layer 2
 FROM tomcat:jre8-alpine 
 COPY --from=builder /target/*.war webapps/student.war
 
@@ -196,3 +197,46 @@ COPY student-ui /.
 RUN mvn clean package
 FROM tomcat:jre8-alpine
 COPY --from=builder /target/*.war webapps/student.war
+
+##03-01-2025
+
+##Docker 3-Tier Architecture
+
+Difference between docker compose and docker file ?
+
+
+what is docker compose ?
+always save dockercompose file as docker-compose.yaml 
+
+version : '3'   
+services: 
+    app:       ##given name of project
+    image: nginx
+    ports: 
+        - "80:80"
+    volumes:
+        - myvolume:/usr/share/nginx/html/      ##givennameof volume : path to be mounted on
+    web: 
+        image: httpd
+        ports:
+            - "8080:80"
+    tomcat:
+        image: tomcat:8.5-jdk8-alpine
+        ports:
+            - "8081:8080"
+volumes:
+    myvolume:
+
+##how to run docker-compose file
+docker-compose up -d   ##-d means detached mode
+
+
+what is docker network ?
+
+# Types of network in docker ?
+
+
+why does docker use 172.16.0.0/16 ip ?
+
+aws vpc default network ip is 172.31.0.0/16 
+
