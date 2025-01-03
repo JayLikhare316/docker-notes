@@ -186,3 +186,31 @@ RUN mvn clean package
 FROM tomcat:jre8-alpine 
 COPY --from=builder /target/*.war webapps/student.war
 
+what is multistage dockerfile?
+multistage dockerfile is a feature of docker that allows you to build multiple images from a singl
+dockerfile. This is useful when you want to create a smaller final image, but you need to
+perform some operations in a larger image.
+
+##Docker 3D architecture:-
+
+what is docker compose?
+docker compose is a tool for defining and running multi-container docker applications.
+with docker compose, you can define a docker application using a single configuration file,
+and then run it using a single command.
+
+# network :-
+bridge
+host
+none
+macvlan
+overlay
+
+Q. 172.16.0.0/16 --> default ip used by docker.why? {because it is uncommon ip, nobody uses it, thats why}
+
+A. Docker uses the 172.16.0.0/16 ip range by default because it is
+a private ip range that is not routable on the internet. This
+means that containers running on a host can communicate with
+each other using these ip addresses, but they will not be
+accessible from outside the host.
+
+#Docker compose file:-
