@@ -136,6 +136,8 @@ Each stage is a separate docker image, and you can use the output of one stage a
 ##task1 using multistage dockerfile
  tomcat alpine --> lightest tomcat image
 
+ Here we donot need to EXPOSE as tomcat we are using tomcat directly.
+
  FROM 3.9.9-amazoncorretto-8-debian-bookworm AS mvnbuilder # we gave the maven repo mvnbuilder name using AS
  COPY student-ui /. # copied the studnet-ui from local to maven container
  RUN mvn clean package # run the maven command to build the student-ui
@@ -162,3 +164,4 @@ Each stage is a separate docker image, and you can use the output of one stage a
  sudo docker-compose up -d --> to start the containers in detached mode i.e. in background
  sudo docker-compose down --> to stop the containers
 
+## Kubernetes Architecture

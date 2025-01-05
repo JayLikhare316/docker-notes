@@ -12,11 +12,21 @@ RUN yum update && yum install java-17 -y
 COPY tomcat /tomcat/. #coping tomcat that is in the same directory as dockerfile.
 RUN chmod 777 tomcat/bin/catalina.sh
 EXPOSE 8080
-COPY student-ui /student-ui/.
+COPY student-ui /student-ui/. #coping student-ui that is in the same directory as dockerfile.
 WORKDIR /student-ui/
 RUN mvn clean package
 RUN mv target/*.war /tomcat/webapps/studentapp.war
 CMD ["/tomcat/bin/catalina.sh", "run"]
+
+##Multistage dockerfile for task1
+FROM maven:3.9.9-amazoncorretto-8-debian-bookworm AS mvnbuilder
+#above we took maven image and used 'AS' to give a simple name to it so that we can use that name in next stage
+COPY student-ui /.
+RUN mvn clean package #used mvn to make target folder
+
+FROM tomcat:jre8-alpine
+COPY --from=mvnbuilder /target/*.war webapps/student.war
+#above we took the war file present in target folder from the previous stage using '--from=' 
 
 
 task2) DONE both within container and in dockerfile
