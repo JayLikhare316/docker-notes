@@ -187,6 +187,7 @@ FROM tomcat:jre8-alpine
 COPY --from=builder /target/*.war webapps/student.war
 
 what is multistage dockerfile?
+
 multistage dockerfile is a feature of docker that allows you to build multiple images from a singl
 dockerfile. This is useful when you want to create a smaller final image, but you need to
 perform some operations in a larger image.
@@ -194,16 +195,24 @@ perform some operations in a larger image.
 ##Docker 3D architecture:-
 
 what is docker compose?
+
 docker compose is a tool for defining and running multi-container docker applications.
 with docker compose, you can define a docker application using a single configuration file,
 and then run it using a single command.
 
-# network :-
-bridge
-host
-none
-macvlan
-overlay
+sudo docker file name --> docker-compose.yml
+sudo docker-compose up --> to start the containers
+sudo docker-compose up -d --> to start the containers in detached mode i.e. in background
+sudo docker-compose down --> to stop the containers
+
+## Docker Network (By default we use bridge network)
+
+Bridge network:- it is the default network in docker. It is used to connect containers to the host machine.
+Host network:- it is used to connect a container to the host machine's network.
+None network:- it is used to isolate a container from the host machine's network.
+macvlan network:- it is used to assign a mac address to a container.
+overlay network:- it is used to connect multiple docker hosts together.
+
 
 Q. 172.16.0.0/16 --> default ip used by docker.why? {because it is uncommon ip, nobody uses it, thats why}
 
@@ -214,3 +223,35 @@ each other using these ip addresses, but they will not be
 accessible from outside the host.
 
 #Docker compose file:-
+
+version : '3'   
+services: 
+    app:       ##given name of project
+    image: nginx
+    ports: 
+        - "80:80"
+    volumes:
+        - myvolume:/usr/share/nginx/html/      ##givennameof volume : path to be mounted on
+    web: 
+        image: httpd
+        ports:
+            - "8080:80"
+    tomcat:
+        image: tomcat:8.5-jdk8-alpine
+        ports:
+            - "8081:8080"
+volumes:
+    myvolume:
+
+##how to run docker-compose file
+docker-compose up -d   ##-d means detached mode
+
+
+what is docker network ?
+
+# Types of network in docker ?
+
+why does docker use 172.16.0.0/16 ip ?
+
+aws vpc default network ip is 172.31.0.0/16 
+
